@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import item from './item';
 
 const items = [];
@@ -15,23 +16,28 @@ const addItem = function (item) {
   //   console.log(e.message);
   // }
 
-   this.items.push(item);
+  this.items.push(item);
 };
 
-const findAndToggleChecked = function (id) {
-  const currentItem = this.findById(id);
-  currentItem.checked = !currentItem.checked;
+const findAndUpdate = function(id, newData) {
+  let currItem = this.items.find(item => item.id === id);
+  Object.assign(currItem, newData);
 };
 
-const findAndUpdateName = function (id, name) {
-  try {
-    item.validateName(name);
-    const currentItem = this.findById(id);
-    currentItem.name = name;
-  } catch (e) {
-    console.log('Cannot update name: ' + e.message);
-  }
-};
+// const findAndToggleChecked = function (id) {
+//   const currentItem = this.findById(id);
+//   currentItem.checked = !currentItem.checked;
+// };
+
+// const findAndUpdateName = function (id, name) {
+//   try {
+//     item.validateName(name);
+//     const currentItem = this.findById(id);
+//     currentItem.name = name;
+//   } catch (e) {
+//     console.log('Cannot update name: ' + e.message);
+//   }
+// };
 
 const findAndDelete = function (id) {
   this.items = this.items.filter(currentItem => currentItem.id !== id);
@@ -46,8 +52,7 @@ export default {
   hideCheckeditems,
   findById,
   addItem,
-  findAndToggleChecked,
-  findAndUpdateName,
+  findAndUpdate,
   findAndDelete,
   toggleCheckedFilter
 };
