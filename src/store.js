@@ -1,8 +1,8 @@
 /* eslint-disable no-console */
 //import item from './item';
-
 const items = [];
 let hideCheckeditems = false;
+let error = null;
 
 const findById = function (id) {
   return this.items.find(currentItem => currentItem.id === id);
@@ -47,12 +47,18 @@ const toggleCheckedFilter = function () {
   this.hideCheckedItems = !this.hideCheckedItems;
 };
 
+const setError = function(message) {
+  this.error = message;
+}
+
 export default {
+  error,
   items,
   hideCheckeditems,
   findById,
   addItem,
   findAndUpdate,
   findAndDelete,
-  toggleCheckedFilter
+  toggleCheckedFilter,
+  setError
 };

@@ -40,6 +40,11 @@ const render = function () {
     items = items.filter(item => !item.checked);
   }
 
+  if(store.error){
+    window.alert(store.error);
+  }
+
+
   // render the shopping list in the DOM
   const shoppingListItemsString = generateShoppingItemsString(items);
 
@@ -53,9 +58,13 @@ const handleNewItemSubmit = function () {
     const newItemName = $('.js-shopping-list-entry').val();
     $('.js-shopping-list-entry').val('');
     api.createItem(newItemName)
-      .then(res => res.json())
+      //.then(res => res.json())
       .then((newItem) => {
         store.addItem(newItem);
+        render();
+      })
+      .catch(error => {
+        store.setError(error.message);
         render();
       });
   });
@@ -74,9 +83,13 @@ const handleDeleteItemClicked = function () {
     const id = getItemIdFromElement(event.currentTarget);
     // delete the item
     api.deleteItem(id)
-      .then(res => res.json())
+      //.then(res => res.json())
       .then(itemId => {
         store.findAndDelete(id);
+        render();
+      })
+      .catch(error => {
+        store.setError(error.message);
         render();
       });
     // store.findAndDelete(id);
@@ -92,9 +105,13 @@ const handleEditShoppingItemSubmit = function () {
     //store.findAndUpdateName(id, itemName);
     //render();
     api.updateItem(id, itemName)
-      .then(res => res.json())
+      //.then(res => res.json())
       .then(newItem => {
         store.findAndUpdate(id, {name: itemName});
+        render();
+      })
+      .catch(error => {
+        store.setError(error.message);
         render();
       });
   });
@@ -108,9 +125,13 @@ const handleItemCheckClicked = function () {
     const item = store.items.find( item => item.id === id);
 
     api.updateItem(id, {checked: !item.checked})
-      .then( res => res.json())
+      //then( res => res.json())
       .then( itemChecked => {
         store.findAndUpdate(id, {checked: !item.checked});
+        render();
+      })
+      .catch(error => {
+        store.setError(error.message);
         render();
       });
   });
