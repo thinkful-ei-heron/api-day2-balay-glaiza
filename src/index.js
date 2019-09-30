@@ -8,9 +8,6 @@ import shoppingList from './shopping-list';
 import api from './api';
 
 const main = function () {
-  api.getItems()
- 
-
   shoppingList.bindEventListeners();
   shoppingList.render();
 };
