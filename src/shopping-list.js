@@ -73,9 +73,14 @@ const handleDeleteItemClicked = function () {
     // get the index of the item in store.items
     const id = getItemIdFromElement(event.currentTarget);
     // delete the item
-    store.findAndDelete(id);
-    // render the updated shopping list
-    render();
+    api.deleteItem(id)
+      .then(res => res.json())
+      .then(itemId => {
+        store.findAndDelete(id);
+        render();
+      });
+    // store.findAndDelete(id);
+    // render();
   });
 };
 
@@ -87,11 +92,11 @@ const handleEditShoppingItemSubmit = function () {
     //store.findAndUpdateName(id, itemName);
     //render();
     api.updateItem(id, itemName)
-    .then(res => res.json())
-    .then(newItem => {
-       store.findAndUpdate(id, {name: itemName});
-       render();
-    })
+      .then(res => res.json())
+      .then(newItem => {
+        store.findAndUpdate(id, {name: itemName});
+        render();
+      });
   });
 };
 
@@ -103,11 +108,11 @@ const handleItemCheckClicked = function () {
     const item = store.items.find( item => item.id === id);
 
     api.updateItem(id, {checked: !item.checked})
-    .then( res => res.json())
-    .then( itemChecked => {
-      store.findAndUpdate(id, {checked: !item.checked})
-      render();
-    })
+      .then( res => res.json())
+      .then( itemChecked => {
+        store.findAndUpdate(id, {checked: !item.checked});
+        render();
+      });
   });
 };
 
